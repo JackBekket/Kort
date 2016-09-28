@@ -34,7 +34,7 @@ contract Registrator  is owned{
 
 string public standard = 'registrator 0.0.2';
 string public version = '0.0.1';
-string public type = 'noncommercial/nonDAO';
+string public t = 'noncommercial';
 
 //address public notarius = owner;
 //uint public price;
@@ -43,12 +43,12 @@ string public type = 'noncommercial/nonDAO';
 // mapping (address => uint256) public balanceOf;
 
 // Array of Owner - Contract - Signed by???
-mapping (address => mapping(string => address)) public Links;
+mapping (address => address)) public Links;
 mapping (address => mapping (address => address)) public Certs;
 mapping (address => bool) public Notariuses;
 
 
-event Registred (address client, address _contract);
+event Registred(address _contract,string name, address client);
 event Signed(address client, address _contract, address signedby);
 
 //initialization
@@ -59,7 +59,7 @@ Notariuses[msg.sender] = true;
 }
 
 // Probably need to use msg.sender instead of address _contract. Test this feauture later
-function register (address _owner,string contractname,address _contract){
+function register (address _contract,string contractname,address _owner){
 /*
 if (amount<price) throw;
 balance0f[msg.sender]=amount;
@@ -69,8 +69,8 @@ Registred(client,amount,link);
 */
 
 
-Links[_owner][contractname]=_contract;
-Registred(_owner,contractname,_contract);
+Links[_contract]=_owner;
+Registred(_contract,contractname,_owner);
 }
 
 
@@ -81,7 +81,7 @@ address notarius = msg.sender;
 
 Certs[_owner][_contract]=notarius;
  //uint date = now * 1 minutes;
-Signed(_owner,_contract,_notarius);
+Signed(_owner,_contract,notarius );
 
 }
 
@@ -92,20 +92,33 @@ function setNotarius(address notarius){
 
 function unRegister (address _owner,string contractname,address _contract) onlyOwner {
   if (Notariuses[msg.sender]!=true) throw;
-delete  Links[_owner][contractname];
+delete  Links[_contract];
 }
 
-function unRegOwn (address _owner,string contractname,address _contract) onlyOwner{
-  if (Notariuses[msg.sender]!=true) throw;
-delete  Links[_owner];
+//function unRegOwn (address _owner,string contractname,address _contract) onlyOwner{
+//  if (Notariuses[msg.sender]!=true) throw;
+//delete  Links[_owner];
 
-}
+//}
 
 function unSign (address _owner,address _contract) onlyOwner {
 if (Notariuses[msg.sender]!=true) throw;
 delete Certs[_owner][_contract];
 }
 
+
+function lookupRegName (address _contract) return(address) {
+return Links[_contract];
+
+
+}
+
+function lookupSigName (address _owner, address _contract) return(address) {
+return Certs[_owner][_contract];
+
+
+
+}
 
 /*
 function safeWithdrawal() onlyOwner {
