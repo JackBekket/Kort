@@ -5,6 +5,9 @@
 #  And probably (to the moment of reading this will be implemented) signed it (verify)
 #
 #   This version worked without DAO inplementation
+#
+#
+#
 #   This version suuport multiply Notariuses
 #
 */
@@ -82,8 +85,26 @@ Signed(_owner,_contract,_notarius);
 
 }
 
+function setNotarius(address notarius){
 
+  Notariuses[notarius]=true;
+}
 
+function unRegister (address _owner,string contractname,address _contract) onlyOwner {
+  if (Notariuses[msg.sender]!=true) throw;
+delete  Links[_owner][contractname];
+}
+
+function unRegOwn (address _owner,string contractname,address _contract) onlyOwner{
+  if (Notariuses[msg.sender]!=true) throw;
+delete  Links[_owner];
+
+}
+
+function unSign (address _owner,address _contract) onlyOwner {
+if (Notariuses[msg.sender]!=true) throw;
+delete Certs[_owner][_contract];
+}
 
 
 /*
