@@ -43,7 +43,7 @@ string public t = 'noncommercial';
 // mapping (address => uint256) public balanceOf;
 
 // Array of Owner - Contract - Signed by???
-mapping (address => address)) public Links;
+mapping (address => address) public Links;
 mapping (address => mapping (address => address)) public Certs;
 mapping (address => bool) public Notariuses;
 
@@ -107,13 +107,13 @@ delete Certs[_owner][_contract];
 }
 
 
-function lookupRegName (address _contract) return(address) {
+function lookupRegName (address _contract) returns(address) {
 return Links[_contract];
 
 
 }
 
-function lookupSigName (address _owner, address _contract) return(address) {
+function lookupSigName (address _owner, address _contract) returns(address) {
 return Certs[_owner][_contract];
 
 
