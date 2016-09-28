@@ -33,7 +33,7 @@ string public contractName;
 
 function Sample (
 
-  registrator=RegistryCenter,
+  registrator RegistryCenter,
   string author,
   string NameOfContract
 
