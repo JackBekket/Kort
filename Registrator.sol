@@ -38,7 +38,9 @@ string public type = 'noncommercial';
 
 // Array of Owner - Contract - Signed by???
 mapping (address => address) public Links;
-event Registred (address client, address contract, address signature);
+mapping (address => mapping (address => address)) public Certs;
+event Registred (address client, address _contract);
+event Signed(address client, address _contract, address signedby);
 
 //initialization
 function Registrator (uint pricePlace){
@@ -46,6 +48,7 @@ function Registrator (uint pricePlace){
 
 }
 
+// Probably need to use msg.sender instead of address _contract. Test this feauture later
 function register (address _owner,address _contract){
 /*
 if (amount<price) throw;
@@ -55,11 +58,20 @@ Links[address]=link;
 Registred(client,amount,link);
 */
 
-Links[owner]=_contract;
+
+Links[_owner]=_contract;
+Registred(_owner,_contract);
 }
 
 
+function sign (address _owner,address _contract, address notarius) onlyOwner {
+Certs[_owner][_contract]=notarius;
+ //uint date = now * 1 minutes;
+Signed(_owner,_contract,_notarius);
 
+
+
+}
 
 
 /*
