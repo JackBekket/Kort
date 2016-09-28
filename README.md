@@ -1,3 +1,3 @@
-# Kort
-Certification center for smart conracts
+# Kort Ethereum
+Certification center for Ethereum smart conracts
 
